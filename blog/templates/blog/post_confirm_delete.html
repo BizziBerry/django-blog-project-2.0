@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удаление поста - Cyberblondy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>Удаление поста</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="main-nav">
+            <a href="{% url 'home' %}" class="nav-link">Главная</a>
+            <a href="{% url 'about' %}" class="nav-link">Обо мне</a>
+            <a href="{% url 'post_list' %}" class="nav-link">Все посты</a>
+        </nav>
+
+        <div class="delete-confirmation">
+            <h2>Подтверждение удаления</h2>
+            <p>Вы уверены, что хотите удалить пост <strong>"{{ object.title }}"</strong>?</p>
+            
+            <form method="post" class="delete-form">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-delete-confirm">Да, удалить</button>
+                    <a href="{% url 'post_detail' object.pk %}" class="btn btn-cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

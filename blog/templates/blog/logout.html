@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выход - Cyberblondy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>Вы вышли из системы</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="logout-message">
+            <h2>Вы успешно вышли из системы</h2>
+            <p>Спасибо за визит! Возвращайтесь скорее.</p>
+            <div class="form-actions">
+                <a href="{% url 'home' %}" class="btn btn-read">На главную</a>
+                <a href="{% url 'login' %}" class="btn btn-submit">Войти снова</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

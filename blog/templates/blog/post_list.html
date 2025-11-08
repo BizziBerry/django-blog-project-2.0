@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все посты - Cyberblondy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>Все записи блога</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="main-nav">
+            <a href="{% url 'home' %}" class="nav-link">Главная</a>
+            <a href="{% url 'about' %}" class="nav-link">Обо мне</a>
+            <a href="{% url 'post_create' %}" class="nav-link">Новый пост</a>
+            {% if user.is_authenticated %}
+                <span class="nav-user">Привет, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}" class="nav-link">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Войти</a>
+                <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
+            {% endif %}
+        </nav>
+
+        {% for post in posts %}
+        <div class="post">
+            <h2><a href="{% url 'post_detail' post.pk %}" class="post-title-link">{{ post.title }}</a></h2>
+            <p class="post-meta">
+                Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }} | 
+                Автор: {{ post.author.username }}
+            </p>
+            <p>{{ post.content|truncatewords:30 }}</p>
+            <div class="post-actions">
+                <a href="{% url 'post_detail' post.pk %}" class="btn btn-read">Читать полностью</a>
+                {% if user.is_authenticated and user == post.author %}
+                    <a href="{% url 'post_edit' post.pk %}" class="btn btn-edit">Редактировать</a>
+                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-delete">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-message">
+            Пока нет записей. <a href="{% url 'post_create' %}" class="empty-link">Будьте первым, кто добавит запись!</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

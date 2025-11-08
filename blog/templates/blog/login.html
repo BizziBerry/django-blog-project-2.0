@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Cyberblondy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>Вход в систему</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="main-nav">
+            <a href="{% url 'home' %}" class="nav-link">Главная</a>
+            <a href="{% url 'about' %}" class="nav-link">Обо мне</a>
+            <a href="{% url 'post_list' %}" class="nav-link">Все посты</a>
+            <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
+        </nav>
+
+        <div class="form-container">
+            <h2>Вход в аккаунт</h2>
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-submit">Войти</button>
+                    <a href="{% url 'register' %}" class="btn btn-cancel">Создать аккаунт</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

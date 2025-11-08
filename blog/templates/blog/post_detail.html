@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - Cyberblondy</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>{{ post.title }}</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="main-nav">
+            <a href="{% url 'home' %}" class="nav-link">Главная</a>
+            <a href="{% url 'about' %}" class="nav-link">Обо мне</a>
+            <a href="{% url 'post_list' %}" class="nav-link">Все посты</a>
+            <a href="{% url 'post_create' %}" class="nav-link">Новый пост</a>
+        </nav>
+
+        <div class="post post-detail">
+            <h2>{{ post.title }}</h2>
+            <p class="post-date">Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }}</p>
+            <div class="post-content">
+                {{ post.content|linebreaks }}
+            </div>
+            
+            <div class="post-actions">
+    <a href="{% url 'post_list' %}" class="btn btn-back">← Назад к списку</a>
+    {% if user.is_authenticated and user == post.author %}
+        <a href="{% url 'post_edit' post.pk %}" class="btn btn-edit">Редактировать</a>
+        <a href="{% url 'post_delete' post.pk %}" class="btn btn-delete">Удалить</a>
+    {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

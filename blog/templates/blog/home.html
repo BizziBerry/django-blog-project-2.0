@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberblondy - AI-developer - личный блог</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Cyberblondy</h1>
+            <p>Добро пожаловать в мой первый блог на Django!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="main-nav">
+            <a href="{% url 'about' %}" class="nav-link">Обо мне</a>
+            <a href="{% url 'post_list' %}" class="nav-link">Все посты</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'post_create' %}" class="nav-link">Новый пост</a>
+                <span class="nav-user">Привет, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}" class="nav-link">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Войти</a>
+                <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
+            {% endif %}
+        </nav>
+
+        <div class="welcome-section">
+            <h2>Приветствую в моём блоге!</h2>
+            <p>Здесь я делюсь мыслями о разработке, искусственном интеллекте и технологиях.</p>
+            
+            {% if user.is_authenticated %}
+                <p>Рады видеть вас снова! Можете создавать новые посты или читать существующие.</p>
+                <div class="form-actions">
+                    <a href="{% url 'post_create' %}" class="btn btn-submit">Создать пост</a>
+                    <a href="{% url 'post_list' %}" class="btn btn-read">Читать посты</a>
+                </div>
+            {% else %}
+                <p>Чтобы создавать и редактировать посты, пожалуйста, войдите в систему или зарегистрируйтесь.</p>
+                <div class="form-actions">
+                    <a href="{% url 'login' %}" class="btn btn-submit">Войти</a>
+                    <a href="{% url 'register' %}" class="btn btn-read">Регистрация</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
